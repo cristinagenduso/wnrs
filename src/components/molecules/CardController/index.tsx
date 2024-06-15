@@ -10,22 +10,28 @@ const CardController: FC<CardControllerProps> = ({
 	curr,
 	tot,
 	disablePrev,
+	disablePrevLevel,
 	disableNext,
+	disableNextLevel,
 }) => {
 	return (
-		<div className="grid grid-cols-5 w-[80%] m-auto mt-6 text-[#E9C5C5]/50">
+		<div className="grid grid-cols-5 w-[80%] m-auto mt-6 text-[#E9C5C5]/50 select-none">
 			<div>
 				<button
-					className="hover:text-[#E9C5C5] text-3xl"
+					className={`btn hover:text-[#E9C5C5] text-3xl ${
+						disablePrev ? "invisible" : ""
+					}`}
 					onClick={previousCard}
 					disabled={disablePrev}
 				>
 					&larr;
 				</button>
 				<button
-					className="text-3xl hover:text-blue-800"
+					className={`btn text-red-600 hover:text-[#E9C5C5] text-3xl ${
+						disablePrevLevel ? "invisible" : ""
+					}`}
 					onClick={previousLevel}
-					disabled={disablePrev}
+					disabled={disablePrevLevel}
 				>
 					&larr;
 				</button>
@@ -35,14 +41,18 @@ const CardController: FC<CardControllerProps> = ({
 			</p>
 			<div className="col-start-7">
 				<button
-					className="text-3xl hover:text-blue-800"
+					className={`btn text-red-600 hover:text-[#E9C5C5] text-3xl ${
+						disableNextLevel ? "invisible" : ""
+					}`}
 					onClick={nextLevel}
-					disabled={disableNext}
+					disabled={disableNextLevel}
 				>
 					&rarr;
 				</button>
 				<button
-					className="hover:text-[#E9C5C5] text-3xl"
+					className={`btn hover:text-[#E9C5C5] text-3xl ${
+						disableNext ? "invisible" : ""
+					}`}
 					onClick={nextCard}
 					disabled={disableNext}
 				>

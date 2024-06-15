@@ -9,5 +9,7 @@ export interface CardControllerProps {
 	curr: number | string;
 	tot: number | string;
 	disablePrev: boolean;
+	disablePrevLevel: boolean;
 	disableNext: boolean;
+	disableNextLevel: boolean;
 }
