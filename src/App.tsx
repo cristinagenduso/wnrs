@@ -39,6 +39,11 @@ type Deck = {
 	questions: string[][];
 };
 
+interface Category {
+	displayName: string;
+	decks: Deck[];
+}
+
 const App: FC = () => {
 	const decks: Deck[] = [
 		breakup,
@@ -65,6 +70,30 @@ const App: FC = () => {
 		valentino,
 		voting,
 	];
+
+	const categories: { [category: string]: Category } = {
+		Main: {
+			displayName: "Main Deck",
+			decks: [main],
+		},
+		Expansions: {
+			displayName: "Expansion",
+			decks: [couples, family, honestDating, innerCircle, ownIt, relationship],
+		},
+		Self: {
+			displayName: "One Player +",
+			decks: [breakup, forgiveness, healing, selfLove, selfReflection],
+		},
+		Online: {
+			displayName: "Online Released",
+			decks: [exfriend, quarantine, raceAndPrivilege, sneakyLink, voting],
+		},
+		Crossover: {
+			displayName: "Crossover",
+			decks: [bumbleBFF, bumbleBizz, bumbleDate, cann, hbomax, valentino],
+		},
+	};
+
 	const [step, setStep] = useState<number>(0);
 	const [selectedDecks, setSelectedDecks] = useState<string[]>([]);
 	const [players, setPlayers] = useState<string[]>([]);
@@ -98,6 +127,7 @@ const App: FC = () => {
 			{step === 1 && (
 				<Decks
 					decks={decks}
+					categories={categories}
 					selectedDecks={selectedDecks}
 					setSelectedDecks={setSelectedDecks}
 					nextStep={nextStep}
