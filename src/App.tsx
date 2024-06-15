@@ -1,7 +1,8 @@
 /// <reference types="vite-plugin-svgr/client" />
+import Button from "@atoms/Button";
 import CardViewer from "@molecules/CardViewer";
-import Decks from "@molecules/Decks";
-import Players from "@molecules/Players";
+import Decks from "@organisms/Decks";
+import Players from "@organisms/Players";
 import { FC, useState } from "react";
 import bumbleBFF from "../src/decks/crossover/bumbleBFF.json";
 import bumbleBizz from "../src/decks/crossover/bumbleBizz.json";
@@ -97,6 +98,11 @@ const App: FC = () => {
 	const [step, setStep] = useState<number>(0);
 	const [selectedDecks, setSelectedDecks] = useState<string[]>(["Main"]);
 	const [players, setPlayers] = useState<string[]>([]);
+	const [theme, setTheme] = useState<"dark" | "light">("dark");
+
+	const toggleTheme = () => {
+		setTheme((prevTheme) => (prevTheme === "dark" ? "light" : "dark"));
+	};
 
 	const nextStep = () => setStep((prevStep) => prevStep + 1);
 	const prevStep = () => setStep((prevStep) => prevStep - 1);
@@ -113,14 +119,8 @@ const App: FC = () => {
 						Strangers
 					</h1>
 					<div>
-						<div onClick={nextStep}>
-							{/* <ArrowRight /> */}
-							<span>New Game</span>
-						</div>
-						{/* <div className={styles.mode} onClick={handleSelectMode("load")}>
-							<ArrowRight className={styles.arrow} />
-							<span>Load Game</span>
-						</div> */}
+						{/* <ArrowRight /> */}
+						<Button onClick={nextStep}>New Game</Button>
 					</div>
 				</>
 			)}
@@ -151,6 +151,8 @@ const App: FC = () => {
 					players={players}
 					setPlayers={setPlayers}
 					prevStep={() => setStep(0)}
+					theme={theme}
+					toggleTheme={toggleTheme}
 				/>
 			)}
 		</div>
