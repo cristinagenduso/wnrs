@@ -110,15 +110,13 @@ const Players: FC<PlayersProps> = ({
 						<Button onClick={prevStep} text="back" />
 					</div>
 				)}
-				{nextStep != null ? (
-					players.length >= minPlayers ? (
-						!players.some((name) => name.trim() === "" || !!error) ? (
-							<div className="grid place-items-end">
-								<Button onClick={nextStep} text="next" />
-							</div>
-						) : null
-					) : null
-				) : null}
+				{nextStep != null &&
+					players.length >= minPlayers &&
+					!players.some((name) => name.trim() === "" || !!error) && (
+						<div className="grid place-items-end">
+							<Button onClick={nextStep} text="next" />
+						</div>
+					)}
 			</div>
 		</div>
 	);
