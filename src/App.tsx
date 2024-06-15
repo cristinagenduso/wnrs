@@ -131,7 +131,7 @@ const App: FC = () => {
 					selectedDecks={selectedDecks}
 					setSelectedDecks={setSelectedDecks}
 					nextStep={nextStep}
-					hasButton
+					prevStep={prevStep}
 				/>
 			)}
 			{step === 2 && (
