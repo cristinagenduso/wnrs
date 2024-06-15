@@ -1,6 +1,8 @@
 import Banner from "@atoms/Banner";
 import DeckSelection from "@atoms/DeckSelection";
+import InfoDialog from "@atoms/InfoDialog/index.js";
 import MenuItem from "@atoms/MenuItem";
+import ThemeSelector from "@atoms/ThemeSelector/index.js";
 import PlayerSetup from "@molecules/PlayerSetup";
 import Palette from "@svg/color.svg?react";
 import Copy from "@svg/copy.svg?react";
@@ -17,6 +19,8 @@ const Menu: FC<MenuProps> = ({
 	setSelectedDecks,
 	setPlayers,
 	players,
+	theme,
+	toggleTheme,
 }) => {
 	const [showInfo, setShowInfo] = useState(false);
 	const [showDecks, setShowDecks] = useState(false);
@@ -50,13 +54,13 @@ const Menu: FC<MenuProps> = ({
 		<div className="grid grid-cols-5 w-[30%] m-auto text-[#c10016] mt-6 relative">
 			<MenuItem
 				handleClick={handleInfoClick}
-				title="Istruzioni"
+				title="How To Play"
 				icon={
 					<Info className="hover:text-[#E9C5C5] w-6 aspect-square mx-auto" />
 				}
 				show={showInfo}
 			>
-				Istruzionishofmels
+				<InfoDialog />
 			</MenuItem>
 			<MenuItem
 				handleClick={handleDecksClick}
@@ -123,7 +127,7 @@ const Menu: FC<MenuProps> = ({
 				}
 				show={showPalette}
 			>
-				Provaahahaahdgjfmrmcl
+				<ThemeSelector theme={theme} toggleTheme={toggleTheme} />
 			</MenuItem>
 			<Banner id="form-banner" />
 		</div>

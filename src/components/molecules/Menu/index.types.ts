@@ -5,6 +5,8 @@ export interface MenuProps {
 	setSelectedDecks: React.Dispatch<React.SetStateAction<string[]>>;
 	setPlayers: (players: string[]) => void;
 	players: string[];
+	theme: string;
+	toggleTheme: React.Ref<HTMLParagraphElement>;
 }
 
 interface Deck {
