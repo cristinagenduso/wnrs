@@ -8,7 +8,7 @@ const Decks: FC<DecksProps> = ({
 	selectedDecks,
 	setSelectedDecks,
 	nextStep,
-	hasButton,
+	prevStep,
 }) => {
 	const toggleDeck = (name: string) => {
 		setSelectedDecks((prev) =>
@@ -92,11 +92,16 @@ const Decks: FC<DecksProps> = ({
 					))}
 				</div>
 			))}
-			{hasButton && selectedDecks.length > 0 && (
-				<div className="mt-10 w-[60%] m-auto grid place-items-end">
-					<Button onClick={nextStep} text="Next" />
+			<div className="w-[60%] grid grid-cols-2 mx-auto mt-20">
+				<div className="place-items-start">
+					<Button onClick={prevStep} text="back" />
 				</div>
-			)}
+				{selectedDecks.length > 0 && (
+					<div className="grid place-items-end">
+						<Button onClick={nextStep} text="next" />
+					</div>
+				)}
+			</div>
 		</div>
 	);
 };
