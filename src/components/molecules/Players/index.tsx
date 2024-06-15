@@ -1,5 +1,5 @@
 import Button from "@atoms/Button";
-import { FC, useEffect, useRef, useState } from "react";
+import { FC, useEffect } from "react";
 import { PlayersProps } from "./index.types";
 
 const Players: FC<PlayersProps> = ({
@@ -9,27 +9,19 @@ const Players: FC<PlayersProps> = ({
 	prevStep,
 	minPlayers = 1,
 }) => {
-	const lastInputRef = useRef<HTMLInputElement | null>(null);
-	const [error, setError] = useState<string>("");
-
 	useEffect(() => {
 		if (players.length < minPlayers) {
 			setPlayers(Array(minPlayers).fill(""));
 		}
 	}, [minPlayers, players.length, setPlayers]);
 
-	const addPlayer = () => {
-		setPlayers([...players, ""]);
-		setTimeout(() => {
-			lastInputRef.current?.focus();
-		}, 0);
-	};
+	const effectivePlayers = players.filter((player) => player.trim() !== "");
 
-	const removePlayer = (index: number) => {
-		if (players.length > minPlayers) {
+	const removePlayer = (index: number) => (e) => {
+		e.preventDefault();
+		if (effectivePlayers.length > minPlayers) {
 			const updatedPlayers = players.filter((_, i) => i !== index);
 			setPlayers(updatedPlayers);
-			validatePlayerNames(updatedPlayers);
 		}
 	};
 
@@ -37,86 +29,76 @@ const Players: FC<PlayersProps> = ({
 		const updatedPlayers = [...players];
 		updatedPlayers[index] = name;
 		setPlayers(updatedPlayers);
-		validatePlayerNames(updatedPlayers);
 	};
 
-	const handleKeyPress = (
-		event: React.KeyboardEvent<HTMLInputElement>,
-		index: number
-	) => {
-		if (event.key === "Enter") {
-			if (index === players.length - 1) {
-				addPlayer();
-			}
+	const removeEmptyPlayers = () => {
+		const filteredPlayers = players.filter((player) => player.trim() !== "");
+		if (filteredPlayers.length < minPlayers) {
+			setPlayers([
+				...filteredPlayers,
+				...Array(minPlayers - filteredPlayers.length).fill(""),
+			]);
+		} else {
+			setPlayers(filteredPlayers);
 		}
 	};
 
-	const validatePlayerNames = (playerNames: string[]) => {
-		const nameSet = new Set();
-		for (const name of playerNames) {
-			if (name.trim() === "") {
-				setError("Player's name cannot be empty.");
-				return;
-			}
-			if (nameSet.has(name)) {
-				setError("Player's name must be unique.");
-				return;
-			}
-			nameSet.add(name);
-		}
-		setError(null);
+	const handleNextStep = () => {
+		removeEmptyPlayers();
+		nextStep();
 	};
+
+	useEffect(() => {
+		if (players[players.length - 1]) setPlayers([...players, ""]);
+	}, [players]);
 
 	return (
 		<div className="mt-20">
-			<h2 className="w-1/2 mx-auto  bg-[#c10016] text-white pl-4 py-2 uppercase font-semibold">
+			<h2 className="w-1/2 mx-auto bg-[#c10016] text-white pl-4 py-2 uppercase font-semibold">
 				players
 			</h2>
 			<p className="w-1/2 mx-auto mt-2 mb-10">
-				Don't worry. You may change this later :)
+				Just a bit more info. You may change also this later :)
 			</p>
 			{players.map((player, index) => (
-				<div key={index} className="w-1/2 mx-auto ">
-					<label htmlFor={player} className="flex mb-10">
-						<span className="text-[#c10016] font-semibold">
-							Player {index + 1}:{" "}
-						</span>
-						<input
-							type="text"
-							value={player}
-							onChange={(e) => handlePlayerNameChange(index, e.target.value)}
-							onKeyDown={(e) => handleKeyPress(e, index)}
-							ref={index === players.length - 1 ? lastInputRef : null}
-							className="border-[#c10016] border-b-4 focus:outline-none focus:border-dotted ml-2"
-						/>
-						{players.length > minPlayers ? (
+				<div key={index} className="grid w-1/2 grid-cols-2 mx-auto">
+					<input
+						name="name"
+						type="text"
+						value={player}
+						onChange={(e) => handlePlayerNameChange(index, e.target.value)}
+						className="p-2 placeholder:opacity-60 h-8 bg-[#c10016]/20 my-1 rounded-md uppercase font-semibold text-[#c10016]"
+						placeholder={`Player ${index + 1}`}
+					/>
+					{index !== players.length - 1 &&
+						effectivePlayers.length > minPlayers && (
 							<button
-								onClick={() => removePlayer(index)}
-								className="text-[#c10016] ml-6 font-semibold"
+								className="relative flex items-center w-8 my-auto aspect-square hover:bg-[#c10016]/20 ml-4 rounded-md"
+								onClick={(e) => removePlayer(index)(e)}
 							>
-								x
+								<svg
+									viewBox="0 0 24 24"
+									className="w-7 m-auto aspect-square text-[#c10016]"
+									fill="currentColor"
+								>
+									<path d="M0 0h24v24H0V0z" fill="none" />
+									<path d="M19 13H5v-2h14v2z" />
+								</svg>
 							</button>
-						) : null}
-					</label>
+						)}
 				</div>
 			))}
-			{error && <p className="text-violet-500">{error}</p>}
-			<div className="m-auto w-fit">
-				<Button onClick={addPlayer} text="add new player" />
-			</div>
 			<div className="w-[60%] grid grid-cols-2 mx-auto mt-20">
 				{prevStep && (
 					<div className="place-items-start">
 						<Button onClick={prevStep} text="back" />
 					</div>
 				)}
-				{nextStep != null &&
-					players.length >= minPlayers &&
-					!players.some((name) => name.trim() === "" || !!error) && (
-						<div className="grid place-items-end">
-							<Button onClick={nextStep} text="next" />
-						</div>
-					)}
+				{nextStep != null && players.length >= minPlayers && (
+					<div className="grid place-items-end">
+						<Button onClick={handleNextStep} text="next" />
+					</div>
+				)}
 			</div>
 		</div>
 	);
