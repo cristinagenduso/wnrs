@@ -1,9 +1,11 @@
 import { FC } from "react";
 import { CardProps } from "./index.types";
 
-const Card: FC<CardProps> = ({ children, textRef }) => {
+const Card: FC<CardProps> = ({ children, textRef, theme }) => {
 	return (
-		<div className="w-[80%] bg-[#E9C5C5] rounded-[60px] text-[#C10016] text-center uppercase m-auto aspect-video relative">
+		<div
+			className={`w-[80%] bg-${theme}-main rounded-[60px] text-${theme}-contrastText text-center uppercase m-auto aspect-video relative`}
+		>
 			<p
 				ref={textRef}
 				className="absolute px-32 text-2xl font-bold align-middle transform -translate-y-1/2 top-1/2"
