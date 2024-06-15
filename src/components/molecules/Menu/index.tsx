@@ -7,6 +7,7 @@ import Copy from "@svg/copy.svg?react";
 import Info from "@svg/help-circle-outline.svg?react";
 import Deck from "@svg/icon.svg?react";
 import { FC, useState } from "react";
+import { getRawQuestion } from "../../../util/helperFn.js";
 import { MenuProps } from "./index.types";
 
 const Menu: FC<MenuProps> = ({
@@ -21,6 +22,7 @@ const Menu: FC<MenuProps> = ({
 	const [showDecks, setShowDecks] = useState(false);
 	const [showPalette, setShowPalette] = useState(false);
 	const [showPlayers, setShowPlayers] = useState(false);
+	const [copied, setCopied] = useState(false);
 
 	const handleInfoClick = () => {
 		setShowInfo(!showInfo);
@@ -39,13 +41,9 @@ const Menu: FC<MenuProps> = ({
 	};
 
 	const copyText = () => {
-		navigator.clipboard.writeText(textRef);
-		const banner = document.getElementById("form-banner");
-		banner.className =
-			"display absolute w-[65%] transform -translate-x-1/2 -translate-y-72 left-1/2";
-		setTimeout(() => {
-			banner.className = "hidden";
-		}, 3000);
+		navigator.clipboard.writeText(getRawQuestion(textRef));
+		setCopied(true);
+		setTimeout(() => setCopied(false), 2000);
 	};
 
 	return (
@@ -75,7 +73,24 @@ const Menu: FC<MenuProps> = ({
 			<MenuItem
 				handleClick={copyText}
 				icon={
-					<Copy className="hover:text-[#E9C5C5] w-6 aspect-square mx-auto" />
+					!copied ? (
+						<Copy className="hover:text-[#E9C5C5] w-6 aspect-square mx-auto" />
+					) : (
+						<svg
+							xmlns="http://www.w3.org/2000/svg"
+							fill="none"
+							viewBox="0 0 24 24"
+							strokeWidth={1.5}
+							stroke="currentColor"
+							className="w-6 mx-auto aspect-square"
+						>
+							<path
+								strokeLinecap="round"
+								strokeLinejoin="round"
+								d="m4.5 12.75 6 6 9-13.5"
+							/>
+						</svg>
+					)
 				}
 			/>
 			<MenuItem
