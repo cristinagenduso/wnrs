@@ -4,5 +4,10 @@ export default {
 	theme: {
 		extend: {},
 	},
+	variants: {
+		extend: {
+			display: ["disabled"], // Ensure disabled variant is available
+		},
+	},
 	plugins: [],
 };
