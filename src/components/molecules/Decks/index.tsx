@@ -25,7 +25,7 @@ const Decks: FC<DecksProps> = ({
 			viewBox="0 0 24 24"
 			strokeWidth={1.5}
 			stroke="currentColor"
-			className={`h-6 w-6 mr-2 col-start-1 ${
+			className={`h-4 w-4 mr-2 my-auto col-start-1 ${
 				selected ? "text-[#c10016] stroke-2" : "text-transparent cursor-default"
 			}`}
 		>
@@ -46,14 +46,14 @@ const Decks: FC<DecksProps> = ({
 				Don't worry. You may change this later :)
 			</p>
 			{Object.values(categories).map((category) => (
-				<div key={category.displayName} className="mb-10">
-					<h2 className="bg-[#c10016] text-white pl-4 py-2 uppercase font-semibold w-1/2 m-auto">
+				<div key={category.displayName} className="mb-2">
+					<h2 className="text-[#c10016] uppercase w-1/2 m-auto text-xs font-semibold">
 						{category.displayName}
 					</h2>
 					{category.decks.map((deck) => (
 						<div
 							key={deck.short_name}
-							className="grid w-1/2 grid-cols-5 m-auto mt-1"
+							className="grid w-1/2 grid-cols-5 pl-2 m-auto mt-1"
 						>
 							<label
 								htmlFor={deck.short_name}
