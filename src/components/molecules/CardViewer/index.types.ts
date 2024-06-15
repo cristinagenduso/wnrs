@@ -17,4 +17,6 @@ export interface CardViewerProps {
 	decks: Deck[];
 	prevStep: () => void;
 	setPlayers: (players: string[]) => void;
+	theme: string;
+	toggleTheme: React.Ref<HTMLParagraphElement>;
 }

@@ -13,6 +13,8 @@ const CardViewer: FC<CardViewerProps> = ({
 	decks,
 	prevStep,
 	setPlayers,
+	theme,
+	toggleTheme,
 }) => {
 	const [currentCardIndex, setCurrentCardIndex] = useState<number>(0);
 	const [currentPlayerIndex, setCurrentPlayerIndex] = useState<number>(0);
@@ -80,7 +82,9 @@ const CardViewer: FC<CardViewerProps> = ({
 			<ButtonBack prevStep={prevStep} />
 			<div>
 				<Header player={players[currentPlayerIndex]} />
-				<Card textRef={textRef}>{currentLevelCards[currentCardIndex]}</Card>
+				<Card textRef={textRef} theme={theme}>
+					{currentLevelCards[currentCardIndex]}
+				</Card>
 			</div>
 			<CardController
 				previousCard={prevCard}
@@ -102,6 +106,8 @@ const CardViewer: FC<CardViewerProps> = ({
 				setSelectedDecks={setSelectedDecks}
 				selectedDecks={selectedDecks}
 				setPlayers={setPlayers}
+				theme={theme}
+				toggleTheme={toggleTheme}
 			/>
 		</div>
 	);
