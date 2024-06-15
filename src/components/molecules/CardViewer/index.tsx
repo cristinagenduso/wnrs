@@ -3,7 +3,7 @@ import Card from "@atoms/Card";
 import Header from "@atoms/Header";
 import CardController from "@molecules/CardController";
 import Menu from "@molecules/Menu";
-import { FC, useRef, useState } from "react";
+import { FC, useMemo, useRef, useState } from "react";
 import { CardViewerProps } from "./index.types";
 
 const CardViewer: FC<CardViewerProps> = ({
@@ -17,26 +17,33 @@ const CardViewer: FC<CardViewerProps> = ({
 	const [currentCardIndex, setCurrentCardIndex] = useState<number>(0);
 	const [currentPlayerIndex, setCurrentPlayerIndex] = useState<number>(0);
 	const [currentLevelIndex, setCurrentLevelIndex] = useState<number>(0);
-
-	const levels = [
-		"Level 1 Perception",
-		"Level 2 Connection",
-		"Level 3 Reflection",
-		"Final Card",
-	];
-
 	const textRef = useRef<HTMLParagraphElement>(null);
 
-	const allCardsByLevel = selectedDecks.flatMap((deckId) => {
-		const deck = decks.find((m) => m.short_name === deckId);
-		return deck ? deck.questions[currentLevelIndex] : [];
-	});
+	const allLevels = useMemo(() => {
+		const levelsMap: { [key: string]: string[] } = {};
+
+		selectedDecks.forEach((deckId) => {
+			const deck = decks.find((m) => m.short_name === deckId);
+			if (deck) {
+				Object.keys(deck.questions).forEach((level, idx) => {
+					if (!levelsMap[idx]) {
+						levelsMap[idx] = [];
+					}
+					levelsMap[idx] = levelsMap[idx].concat(deck.questions[level]);
+				});
+			}
+		});
+
+		return Object.values(levelsMap).filter((level) => level.length > 0);
+	}, [selectedDecks, decks]);
+
+	const currentLevelCards = allLevels[currentLevelIndex] || [];
 
 	const nextCard = () => {
-		if (currentCardIndex < allCardsByLevel.length - 1) {
+		if (currentCardIndex < currentLevelCards.length - 1) {
 			setCurrentCardIndex((prev) => prev + 1);
 			setCurrentPlayerIndex((prev) => (prev + 1) % players.length);
-		} else if (currentLevelIndex < levels.length - 1) {
+		} else if (currentLevelIndex < allLevels.length - 1) {
 			nextLevel();
 		}
 	};
@@ -53,7 +60,7 @@ const CardViewer: FC<CardViewerProps> = ({
 	};
 
 	const nextLevel = () => {
-		if (currentLevelIndex < levels.length - 1) {
+		if (currentLevelIndex < allLevels.length - 1) {
 			setCurrentLevelIndex((prev) => prev + 1);
 			setCurrentCardIndex(0);
 			setCurrentPlayerIndex(0);
@@ -73,7 +80,7 @@ const CardViewer: FC<CardViewerProps> = ({
 			<ButtonBack prevStep={prevStep} />
 			<div>
 				<Header player={players[currentPlayerIndex]} />
-				<Card textRef={textRef}>{allCardsByLevel[currentCardIndex]}</Card>
+				<Card textRef={textRef}>{currentLevelCards[currentCardIndex]}</Card>
 			</div>
 			<CardController
 				previousCard={prevCard}
@@ -82,15 +89,14 @@ const CardViewer: FC<CardViewerProps> = ({
 				nextLevel={nextLevel}
 				level={currentLevelIndex + 1}
 				curr={currentCardIndex + 1}
-				tot={allCardsByLevel.length}
-				disablePrev={currentCardIndex === 0 && currentLevelIndex === 0}
-				disableNext={
-					currentCardIndex === allCardsByLevel.length - 1 &&
-					currentLevelIndex === levels.length - 1
-				}
+				tot={currentLevelCards.length}
+				disablePrev={currentCardIndex === 0}
+				disablePrevLevel={currentLevelIndex === 0}
+				disableNext={currentCardIndex === currentLevelCards.length - 1}
+				disableNextLevel={currentLevelIndex === allLevels.length - 1}
 			/>
 			<Menu
-				textRef={allCardsByLevel[currentCardIndex]}
+				textRef={currentLevelCards[currentCardIndex]}
 				decks={decks}
 				players={players}
 				setSelectedDecks={setSelectedDecks}
