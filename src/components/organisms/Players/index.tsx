@@ -91,12 +91,12 @@ const Players: FC<PlayersProps> = ({
 			<div className="w-[60%] grid grid-cols-2 mx-auto mt-20">
 				{prevStep && (
 					<div className="place-items-start">
-						<Button onClick={prevStep} text="back" />
+						<Button onClick={prevStep}>back</Button>
 					</div>
 				)}
 				{nextStep != null && players.length >= minPlayers && (
 					<div className="grid place-items-end">
-						<Button onClick={handleNextStep} text="next" />
+						<Button onClick={handleNextStep}>next</Button>
 					</div>
 				)}
 			</div>
