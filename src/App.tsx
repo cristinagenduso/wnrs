@@ -95,7 +95,7 @@ const App: FC = () => {
 	};
 
 	const [step, setStep] = useState<number>(0);
-	const [selectedDecks, setSelectedDecks] = useState<string[]>([]);
+	const [selectedDecks, setSelectedDecks] = useState<string[]>(["Main"]);
 	const [players, setPlayers] = useState<string[]>([]);
 
 	const nextStep = () => setStep((prevStep) => prevStep + 1);
