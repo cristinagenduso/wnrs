@@ -5,6 +5,7 @@ export interface DecksProps {
 	setSelectedDecks: (value) => void;
 	nextStep?: () => void;
 	prevStep?: () => void;
+	theme: string;
 }
 
 type Categories = {

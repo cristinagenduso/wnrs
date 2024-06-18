@@ -12,4 +12,5 @@ export interface CardControllerProps {
 	disablePrevLevel: boolean;
 	disableNext: boolean;
 	disableNextLevel: boolean;
+	theme: string;
 }

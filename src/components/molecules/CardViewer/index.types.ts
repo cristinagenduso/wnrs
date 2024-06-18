@@ -12,11 +12,21 @@ interface Deck {
 
 export interface CardViewerProps {
 	selectedDecks: string[];
-	setSelectedDecks: React.Dispatch<React.SetStateAction<string[]>>;
+	setSelectedDecks: (value) => void;
 	players: string[];
 	decks: Deck[];
 	prevStep: () => void;
 	setPlayers: (players: string[]) => void;
 	theme: string;
-	toggleTheme: React.Ref<HTMLParagraphElement>;
+	toggleTheme: (theme: string) => void;
+	categories: Categories;
+}
+
+type Categories = {
+	[category: string]: Category;
+};
+
+interface Category {
+	displayName: string;
+	decks: Deck[];
 }

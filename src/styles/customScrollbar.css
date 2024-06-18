@@ -2,17 +2,174 @@
 	width: 12px;
 }
 
-.deck-list::-webkit-scrollbar-thumb {
+[data-theme="selfLove"] .deck-list::-webkit-scrollbar-thumb {
+	background-color: #efc5c3;
+	border-radius: 6px;
+}
+
+[data-theme="selfLove"] .deck-list::-webkit-scrollbar-thumb:hover {
+	background-color: #fff8f6;
+}
+
+[data-theme="selfLove"] .deck-list::-webkit-scrollbar-track {
+	background-color: rgba(239, 197, 195, 0.4);
+	border-radius: 6px;
+}
+
+.deck-list-selection::-webkit-scrollbar {
+	width: 12px;
+}
+
+.deck-list-selection::-webkit-scrollbar-thumb {
+	background-color: #fff8f6;
+	border-radius: 6px;
+}
+
+.deck-list-selection::-webkit-scrollbar-thumb:hover {
+	background-color: #fb4d3f;
+}
+
+.deck-list-selection::-webkit-scrollbar-track {
+	background-color: rgba(193, 0, 22, 0.4);
+	border-radius: 6px;
+}
+
+[data-theme="main"] .deck-list::-webkit-scrollbar-thumb {
 	background-color: #c10016;
 	border-radius: 6px;
-	border: 3px solid #fff;
 }
 
-.deck-list::-webkit-scrollbar-thumb:hover {
+[data-theme="main"] .deck-list::-webkit-scrollbar-thumb:hover {
+	background-color: #fb4d3f;
+}
+
+[data-theme="main"] .deck-list::-webkit-scrollbar-track {
+	background-color: rgba(193, 0, 22, 0.4);
+	border-radius: 6px;
+}
+
+[data-theme="voting"] .deck-list::-webkit-scrollbar-thumb {
+	background-color: #272c6c;
+	border-radius: 6px;
+}
+
+[data-theme="voting"] .deck-list::-webkit-scrollbar-thumb:hover {
+	background-color: #57559b;
+}
+
+[data-theme="voting"] .deck-list::-webkit-scrollbar-track {
+	background-color: rgba(39, 44, 108, 0.4);
+	border-radius: 6px;
+}
+
+[data-theme="race"] .deck-list::-webkit-scrollbar-thumb {
+	background-color: #181818;
+	border-radius: 6px;
+}
+
+[data-theme="race"] .deck-list::-webkit-scrollbar-thumb:hover {
+	background-color: #3e3e3e;
+}
+
+[data-theme="race"] .deck-list::-webkit-scrollbar-track {
+	background-color: rgba(24, 24, 24, 0.4);
+	border-radius: 6px;
+}
+
+[data-theme="ownIt"] .deck-list::-webkit-scrollbar-thumb {
 	background-color: #c10016;
+	border-radius: 6px;
 }
 
-.deck-list::-webkit-scrollbar-track {
-	background-color: #c1001725;
+[data-theme="ownIt"] .deck-list::-webkit-scrollbar-thumb:hover {
+	background-color: #fb4d3f;
+}
+
+[data-theme="ownIt"] .deck-list::-webkit-scrollbar-track {
+	background-color: rgba(193, 0, 22, 0.4);
+	border-radius: 6px;
+}
+
+[data-theme="valentino"] .deck-list::-webkit-scrollbar-thumb {
+	background-color: #4e1214;
+	border-radius: 6px;
+}
+
+[data-theme="valentino"] .deck-list::-webkit-scrollbar-thumb:hover {
+	background-color: #7e3c3a;
+}
+
+[data-theme="valentino"] .deck-list::-webkit-scrollbar-track {
+	background-color: rgba(78, 18, 20, 0.4);
+	border-radius: 6px;
+}
+
+[data-theme="cann"] .deck-list::-webkit-scrollbar-thumb {
+	background-color: #ecd2e1;
+	border-radius: 6px;
+}
+
+[data-theme="cann"] .deck-list::-webkit-scrollbar-thumb:hover {
+	background-color: #ffffff;
+}
+
+[data-theme="cann"] .deck-list::-webkit-scrollbar-track {
+	background-color: rgba(236, 210, 225, 0.4);
+	border-radius: 6px;
+}
+
+[data-theme="bumbleDate"] .deck-list::-webkit-scrollbar-thumb {
+	background-color: #f8cb5e;
+	border-radius: 6px;
+}
+
+[data-theme="bumbleDate"] .deck-list::-webkit-scrollbar-thumb:hover {
+	background-color: #fffe8e;
+}
+
+[data-theme="bumbleDate"] .deck-list::-webkit-scrollbar-track {
+	background-color: rgba(248, 203, 94, 0.4);
+	border-radius: 6px;
+}
+
+[data-theme="bumbleBizz"] .deck-list::-webkit-scrollbar-thumb {
+	background-color: #ee7547;
+	border-radius: 6px;
+}
+
+[data-theme="bumbleBizz"] .deck-list::-webkit-scrollbar-thumb:hover {
+	background-color: #ffa674;
+}
+
+[data-theme="bumbleBizz"] .deck-list::-webkit-scrollbar-track {
+	background-color: rgba(238, 117, 71, 0.4);
+	border-radius: 6px;
+}
+
+[data-theme="bumbleBFF"] .deck-list::-webkit-scrollbar-thumb {
+	background-color: #4098bc;
+	border-radius: 6px;
+}
+
+[data-theme="bumbleBFF"] .deck-list::-webkit-scrollbar-thumb:hover {
+	background-color: #77c9ef;
+}
+
+[data-theme="bumbleBFF"] .deck-list::-webkit-scrollbar-track {
+	background-color: rgba(64, 152, 188, 0.4);
+	border-radius: 6px;
+}
+
+[data-theme="hbo"] .deck-list::-webkit-scrollbar-thumb {
+	background-color: #1f164c;
+	border-radius: 6px;
+}
+
+[data-theme="hbo"] .deck-list::-webkit-scrollbar-thumb:hover {
+	background-color: #006a8c;
+}
+
+[data-theme="hbo"] .deck-list::-webkit-scrollbar-track {
+	background-color: rgba(31, 22, 76, 0.4);
 	border-radius: 6px;
 }

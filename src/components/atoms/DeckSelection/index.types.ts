@@ -1,9 +1,18 @@
 export interface DeckSelectionProps {
 	decks: Deck[];
+	categories: Categories;
 	selectedDecks: string[];
-	setSelectedDecks: React.Dispatch<React.SetStateAction<string[]>>;
-	nextStep?: () => void;
-	hasButton?: boolean;
+	setSelectedDecks: (value) => void;
+	handleClick: () => void;
+}
+
+type Categories = {
+	[category: string]: Category;
+};
+
+interface Category {
+	displayName: string;
+	decks: Deck[];
 }
 
 interface Deck {

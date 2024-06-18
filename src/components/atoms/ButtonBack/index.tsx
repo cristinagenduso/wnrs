@@ -1,11 +1,11 @@
-import React, { FC } from "react";
+import { FC } from "react";
 import { ButtonBackProps } from "./index.types";
 
-const ButtonBack: FC<ButtonBackProps> = ({ prevStep }) => {
+const ButtonBack: FC<ButtonBackProps> = ({ prevStep, theme }) => {
 	return (
 		<div className="absolute top-2 left-2">
 			<button
-				className="opacity-80 hover:opacity-100 text-[#c10016] uppercase font-semibold flex"
+				className={`${theme} opacity-80 hover:opacity-100 text-contrastText uppercase font-semibold flex`}
 				onClick={prevStep}
 			>
 				<svg viewBox="0 0 24 24" fill="currentColor" className="size-6">

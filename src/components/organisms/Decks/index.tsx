@@ -1,6 +1,8 @@
 import Button from "@atoms/Button";
+import Dialog from "@atoms/Dialog";
+import InfoDialog from "@atoms/InfoDialog";
 import Deck from "@svg/icon.svg?react";
-import { FC } from "react";
+import { FC, useState } from "react";
 import { DecksProps } from "./index.types";
 
 const Decks: FC<DecksProps> = ({
@@ -9,13 +11,24 @@ const Decks: FC<DecksProps> = ({
 	setSelectedDecks,
 	nextStep,
 	prevStep,
+	theme,
 }) => {
 	const toggleDeck = (name: string) => {
 		setSelectedDecks((prev) =>
 			prev.includes(name)
-				? prev.filter((prevSlug) => prevSlug !== name)
+				? prev.length > 1
+					? prev.filter((prevName) => prevName !== name)
+					: prev
 				: [...prev, name]
 		);
+	};
+
+	const [open, setOpen] = useState(false);
+	const [openDeckId, setOpenDeckId] = useState(null);
+
+	const handleClick = (deckId) => {
+		setOpenDeckId(deckId);
+		setOpen(!open);
 	};
 
 	const CheckIcon = ({ selected }: { selected: boolean }) => (
@@ -25,8 +38,10 @@ const Decks: FC<DecksProps> = ({
 			viewBox="0 0 24 24"
 			strokeWidth={1.5}
 			stroke="currentColor"
-			className={`h-4 w-4 mr-2 my-auto col-start-1 ${
-				selected ? "text-[#c10016] stroke-2" : "text-transparent cursor-default"
+			className={`h-4 w-4 mr-2 my-auto col-start-1 ${theme} ${
+				selected
+					? "text-contrastPaperText stroke-2"
+					: "text-transparent cursor-default"
 			}`}
 		>
 			<path
@@ -38,17 +53,21 @@ const Decks: FC<DecksProps> = ({
 	);
 
 	return (
-		<div className="mx-auto mt-20">
-			<h2 className="bg-[#c10016] text-white pl-4 py-2 uppercase font-semibold w-1/2 m-auto">
+		<div className="pt-5 mx-auto md:pt-20">
+			<h2
+				className={`w-[90%] md:w-1/2 py-2 pl-4 m-auto font-semibold uppercase text-contrastText bg-main text-xl ${theme}`}
+			>
 				decks
 			</h2>
-			<p className="w-1/2 m-auto mt-2 mb-10">
+			<p className="w-[90%] md:w-1/2 m-auto mt-2 mb-10">
 				Don't worry. You may change this later :)
 			</p>
-			<div className="w-1/2 p-2 m-auto overflow-y-scroll deck-list h-96">
+			<div className="w-[90%] md:w-1/2 p-2 m-auto overflow-y-scroll deck-list h-96">
 				{Object.values(categories).map((category) => (
 					<div key={category.displayName} className="mb-2">
-						<h2 className="text-[#c10016] uppercase text-xs font-semibold">
+						<h2
+							className={`${theme} text-xs font-semibold uppercase text-contrastPaperText`}
+						>
 							{category.displayName}
 						</h2>
 						{category.decks.map((deck) => (
@@ -67,16 +86,45 @@ const Decks: FC<DecksProps> = ({
 									<CheckIcon
 										selected={selectedDecks.includes(deck.short_name)}
 									/>
-									<p className="select-none uppercase text-[#c10016] font-semibold">
+									<p
+										className={`${theme} select-none uppercase text-contrastPaperText font-semibold hover:underline`}
+									>
 										{deck.short_name}
 									</p>
 								</label>
-								<div className="grid grid-cols-2 col-start-5 justify-self-end">
+								<div className="grid grid-cols-3 col-span-2 col-start-4 gap-x-2 justify-self-end">
+									{deck.backDesc != null && deck.preview != null ? (
+										<button onClick={() => handleClick(deck.short_name)}>
+											<svg
+												viewBox="0 0 24 24"
+												fill="currentColor"
+												className={`${theme} m-auto text-contrastPaperText size-5 opacity-80`}
+											>
+												<path d="M0 0h24v24H0V0z" fill="none" />
+												<path d="M11 7h2v2h-2zm0 4h2v6h-2zm1-9C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z" />
+											</svg>
+										</button>
+									) : (
+										<div />
+									)}
+									{openDeckId === deck.short_name && (
+										<Dialog
+											title={deck.name}
+											handleClose={() => handleClick(null)}
+											isInfo
+											theme={theme}
+										>
+											<InfoDialog
+												backDesc={deck.backDesc}
+												preview={deck.preview}
+											/>
+										</Dialog>
+									)}
 									{deck.players === "1" ? (
 										<svg
 											viewBox="0 0 24 24"
 											fill="currentColor"
-											className="mr-1 text-[#c10016] size-6 opacity-80"
+											className={`${theme} text-contrastPaperText size-6 opacity-80`}
 										>
 											<path d="M0 0h24v24H0z" fill="none" />
 											<path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" />
@@ -85,7 +133,7 @@ const Decks: FC<DecksProps> = ({
 										<svg
 											viewBox="0 0 24 24"
 											fill="currentColor"
-											className="mr-1 text-[#c10016] size-6 opacity-80"
+											className={`${theme} text-contrastPaperText size-6 opacity-80`}
 										>
 											<path d="M13,8c0-2.21-1.79-4-4-4S5,5.79,5,8s1.79,4,4,4S13,10.21,13,8z M15,10v2h3v3h2v-3h3v-2h-3V7h-2v3H15z M1,18v2h16v-2 c0-2.66-5.33-4-8-4S1,15.34,1,18z" />
 										</svg>
@@ -93,7 +141,7 @@ const Decks: FC<DecksProps> = ({
 										<svg
 											viewBox="0 0 24 24"
 											fill="currentColor"
-											className="mr-1 text-[#c10016] size-6 opacity-80"
+											className={`${theme} text-contrastPaperText size-6 opacity-80`}
 										>
 											<path d="M16.67,13.13C18.04,14.06,19,15.32,19,17v3h4v-3 C23,14.82,19.43,13.53,16.67,13.13z" />
 											<circle cx="9" cy="8" r="4" />
@@ -104,7 +152,7 @@ const Decks: FC<DecksProps> = ({
 										<svg
 											viewBox="0 0 24 24"
 											fill="currentColor"
-											className="mr-1 text-[#c10016] size-6 opacity-80"
+											className={`${theme} text-contrastPaperText size-6 opacity-80`}
 										>
 											<polygon points="22,9 22,7 20,7 20,9 18,9 18,11 20,11 20,13 22,13 22,11 24,11 24,9" />
 											<path d="M8,12c2.21,0,4-1.79,4-4s-1.79-4-4-4S4,5.79,4,8S5.79,12,8,12z" />
@@ -114,7 +162,9 @@ const Decks: FC<DecksProps> = ({
 										</svg>
 									) : null}
 									{deck.isExpansion ? (
-										<Deck className="w-6 mx-auto aspect-square h-fit text-[#c10016] opacity-80" />
+										<Deck
+											className={`${theme} w-6 aspect-square h-fit text-contrastPaperText opacity-80`}
+										/>
 									) : null}
 								</div>
 							</div>
@@ -122,15 +172,17 @@ const Decks: FC<DecksProps> = ({
 					</div>
 				))}
 			</div>
-			<div className="w-[60%] grid grid-cols-2 mx-auto mt-20">
+			<div className="w-[90%] md:w-[60%] grid grid-cols-2 mx-auto md:mt-20 mt-7">
 				<div className="place-items-start">
-					<Button onClick={prevStep}>back</Button>
+					<Button onClick={prevStep} theme={theme}>
+						back
+					</Button>
 				</div>
-				{selectedDecks.length > 0 && (
-					<div className="grid place-items-end">
-						<Button onClick={nextStep}>next</Button>
-					</div>
-				)}
+				<div className="grid place-items-end">
+					<Button onClick={nextStep} theme={theme}>
+						next
+					</Button>
+				</div>
 			</div>
 		</div>
 	);

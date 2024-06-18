@@ -15,6 +15,7 @@ const CardViewer: FC<CardViewerProps> = ({
 	setPlayers,
 	theme,
 	toggleTheme,
+	categories,
 }) => {
 	const [currentCardIndex, setCurrentCardIndex] = useState<number>(0);
 	const [currentPlayerIndex, setCurrentPlayerIndex] = useState<number>(0);
@@ -78,37 +79,39 @@ const CardViewer: FC<CardViewerProps> = ({
 	};
 
 	return (
-		<div>
-			<ButtonBack prevStep={prevStep} />
-			<div>
-				<Header player={players[currentPlayerIndex]} />
+		<div className="pt-14">
+			<ButtonBack prevStep={prevStep} theme={theme} />
+			<div className="absolute transform -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2 sm:w-[80%] w-full">
+				<Header player={players[currentPlayerIndex]} theme={theme} />
 				<Card textRef={textRef} theme={theme}>
 					{currentLevelCards[currentCardIndex]}
 				</Card>
+				<CardController
+					theme={theme}
+					previousCard={prevCard}
+					nextCard={nextCard}
+					previousLevel={prevLevel}
+					nextLevel={nextLevel}
+					level={currentLevelIndex + 1}
+					curr={currentCardIndex + 1}
+					tot={currentLevelCards.length}
+					disablePrev={currentCardIndex === 0}
+					disablePrevLevel={currentLevelIndex === 0}
+					disableNext={currentCardIndex === currentLevelCards.length - 1}
+					disableNextLevel={currentLevelIndex === allLevels.length - 1}
+				/>
+				<Menu
+					textRef={currentLevelCards[currentCardIndex]}
+					decks={decks}
+					players={players}
+					setSelectedDecks={setSelectedDecks}
+					selectedDecks={selectedDecks}
+					setPlayers={setPlayers}
+					theme={theme}
+					toggleTheme={toggleTheme}
+					categories={categories}
+				/>
 			</div>
-			<CardController
-				previousCard={prevCard}
-				nextCard={nextCard}
-				previousLevel={prevLevel}
-				nextLevel={nextLevel}
-				level={currentLevelIndex + 1}
-				curr={currentCardIndex + 1}
-				tot={currentLevelCards.length}
-				disablePrev={currentCardIndex === 0}
-				disablePrevLevel={currentLevelIndex === 0}
-				disableNext={currentCardIndex === currentLevelCards.length - 1}
-				disableNextLevel={currentLevelIndex === allLevels.length - 1}
-			/>
-			<Menu
-				textRef={currentLevelCards[currentCardIndex]}
-				decks={decks}
-				players={players}
-				setSelectedDecks={setSelectedDecks}
-				selectedDecks={selectedDecks}
-				setPlayers={setPlayers}
-				theme={theme}
-				toggleTheme={toggleTheme}
-			/>
 		</div>
 	);
 };

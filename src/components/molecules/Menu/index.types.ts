@@ -6,7 +6,17 @@ export interface MenuProps {
 	setPlayers: (players: string[]) => void;
 	players: string[];
 	theme: string;
-	toggleTheme: React.Ref<HTMLParagraphElement>;
+	toggleTheme: (theme: string) => void;
+	categories: Categories;
+}
+
+type Categories = {
+	[category: string]: Category;
+};
+
+interface Category {
+	displayName: string;
+	decks: Deck[];
 }
 
 interface Deck {

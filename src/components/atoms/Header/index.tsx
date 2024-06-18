@@ -1,10 +1,12 @@
 import { FC } from "react";
 import { HeaderProps } from "./index.types";
 
-const Header: FC<HeaderProps> = ({ player }) => {
+const Header: FC<HeaderProps> = ({ player, theme }) => {
 	return (
-		<div className="mx-auto mb-3 text-[#E9C5C5] uppercase w-fit text-lg font-bold">
-			{player}'s turn
+		<div
+			className={`${theme} mx-auto mb-3 text-sm md:text-lg font-bold uppercase text-contrastText w-fit`}
+		>
+			{player != "" ? `${player}'s turn` : null}
 		</div>
 	);
 };

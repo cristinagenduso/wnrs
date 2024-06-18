@@ -1,9 +1,8 @@
 /// <reference types="vite-plugin-svgr/client" />
-import Button from "@atoms/Button";
 import CardViewer from "@molecules/CardViewer";
 import Decks from "@organisms/Decks";
 import Players from "@organisms/Players";
-import { FC, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import bumbleBFF from "../src/decks/crossover/bumbleBFF.json";
 import bumbleBizz from "../src/decks/crossover/bumbleBizz.json";
 import bumbleDate from "../src/decks/crossover/bumbleDate.json";
@@ -98,31 +97,51 @@ const App: FC = () => {
 	const [step, setStep] = useState<number>(0);
 	const [selectedDecks, setSelectedDecks] = useState<string[]>(["Main"]);
 	const [players, setPlayers] = useState<string[]>([]);
-	const [theme, setTheme] = useState<"dark" | "light">("dark");
+	const [theme, setTheme] = useState<string>("main");
 
-	const toggleTheme = () => {
-		setTheme((prevTheme) => (prevTheme === "dark" ? "light" : "dark"));
+	useEffect(() => {
+		document.documentElement.setAttribute("data-theme", theme);
+	}, [theme]);
+
+	const toggleTheme = (newTheme) => {
+		setTheme(newTheme);
 	};
 
 	const nextStep = () => setStep((prevStep) => prevStep + 1);
 	const prevStep = () => setStep((prevStep) => prevStep - 1);
 
 	return (
-		<div>
+		<div
+			className={`h-screen relative ${
+				step === 3 ? `${theme} bg-main` : "bg-white"
+			}`}
+		>
 			{step === 0 && (
-				<>
-					<h1>
+				<div className="absolute -translate-x-1/2 -translate-y-1/2 tranform top-1/2 left-1/2 w-fit">
+					<h1 className="text-3xl font-bold tracking-wide uppercase">
 						We&apos;re Not
 						<br />
 						Really
 						<br />
 						Strangers
 					</h1>
-					<div>
-						{/* <ArrowRight /> */}
-						<Button onClick={nextStep}>New Game</Button>
+					<div className="flex flex-row w-fit group">
+						<button
+							onClick={nextStep}
+							className="font-bold uppercase group-hover:text-main"
+						>
+							New Game
+						</button>
+						<svg
+							viewBox="0 0 24 24"
+							fill="currentColor"
+							className={`group-hover:text-main ml-1 size-6 my-auto aspect-square ${theme} text-transparent`}
+						>
+							<path d="M0 0h24v24H0V0z" fill="none" />
+							<path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6-6-6z" />
+						</svg>
 					</div>
-				</>
+				</div>
 			)}
 			{step === 1 && (
 				<Decks
@@ -132,6 +151,7 @@ const App: FC = () => {
 					setSelectedDecks={setSelectedDecks}
 					nextStep={nextStep}
 					prevStep={prevStep}
+					theme={theme}
 				/>
 			)}
 			{step === 2 && (
@@ -141,6 +161,7 @@ const App: FC = () => {
 					nextStep={nextStep}
 					prevStep={prevStep}
 					minPlayers={1}
+					theme={theme}
 				/>
 			)}
 			{step === 3 && (
@@ -153,6 +174,7 @@ const App: FC = () => {
 					prevStep={() => setStep(0)}
 					theme={theme}
 					toggleTheme={toggleTheme}
+					categories={categories}
 				/>
 			)}
 		</div>

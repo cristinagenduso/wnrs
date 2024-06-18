@@ -8,14 +8,21 @@ const MenuItem: FC<MenuItemProps> = ({
 	show,
 	title,
 	icon,
+	isDeck,
+	theme,
 }) => {
 	return (
 		<>
-			<button onClick={handleClick} className="cursor-pointer">
+			<button onClick={handleClick} className="cursor-pointer w-fit">
 				{icon}
 			</button>
 			{show && (
-				<Dialog handleClose={handleClick} title={title}>
+				<Dialog
+					handleClose={handleClick}
+					title={title}
+					isDeck={isDeck}
+					theme={theme}
+				>
 					{children}
 				</Dialog>
 			)}

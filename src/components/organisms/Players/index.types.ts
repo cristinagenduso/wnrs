@@ -4,4 +4,5 @@ export interface PlayersProps {
 	nextStep?: () => void;
 	prevStep?: () => void;
 	minPlayers?: number;
+	theme: string;
 }

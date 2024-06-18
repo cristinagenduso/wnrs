@@ -1,34 +1,25 @@
-import { FC, useEffect, useRef, useState } from "react";
-import { PlayerSetupProps } from "./index.types";
+import { FC, useEffect } from "react";
+import { PlayersSetupProps } from "./index.types";
 
-const PlayerSetup: FC<PlayerSetupProps> = ({
+const PlayersSetup: FC<PlayersSetupProps> = ({
 	players,
 	setPlayers,
-	nextStep,
-	prevStep,
-	minPlayers = 1,
+	minPlayers,
+	theme,
 }) => {
-	const lastInputRef = useRef<HTMLInputElement | null>(null);
-	const [error, setError] = useState<string>("");
-
 	useEffect(() => {
 		if (players.length < minPlayers) {
 			setPlayers(Array(minPlayers).fill(""));
 		}
 	}, [minPlayers, players.length, setPlayers]);
 
-	const addPlayer = () => {
-		setPlayers([...players, ""]);
-		setTimeout(() => {
-			lastInputRef.current?.focus();
-		}, 0);
-	};
+	const effectivePlayers = players.filter((player) => player.trim() !== "");
 
-	const removePlayer = (index: number) => {
-		if (players.length > minPlayers) {
+	const removePlayer = (index: number) => (e) => {
+		e.preventDefault();
+		if (effectivePlayers.length > minPlayers) {
 			const updatedPlayers = players.filter((_, i) => i !== index);
 			setPlayers(updatedPlayers);
-			validatePlayerNames(updatedPlayers);
 		}
 	};
 
@@ -36,71 +27,46 @@ const PlayerSetup: FC<PlayerSetupProps> = ({
 		const updatedPlayers = [...players];
 		updatedPlayers[index] = name;
 		setPlayers(updatedPlayers);
-		validatePlayerNames(updatedPlayers);
 	};
 
-	const handleKeyPress = (
-		event: React.KeyboardEvent<HTMLInputElement>,
-		index: number
-	) => {
-		if (event.key === "Enter") {
-			if (index === players.length - 1) {
-				addPlayer();
-			}
+	useEffect(() => {
+		if (players.length === 0 || players[players.length - 1].trim() !== "") {
+			setPlayers([...players, ""]);
 		}
-	};
-
-	const validatePlayerNames = (playerNames: string[]) => {
-		const nameSet = new Set();
-		for (const name of playerNames) {
-			if (name.trim() === "") {
-				setError("I nomi dei giocatori non possono essere vuoti.");
-				return;
-			}
-			if (nameSet.has(name)) {
-				setError("I nomi dei giocatori devono essere unici.");
-				return;
-			}
-			nameSet.add(name);
-		}
-		setError(null);
-	};
+	}, [players, setPlayers]);
 
 	return (
-		<div>
-			<h2>Inserisci i Giocatori</h2>
+		<div className="py-10">
 			{players.map((player, index) => (
-				<div key={index}>
-					<label>Giocatore {index + 1}:</label>
+				<div key={index} className="grid w-1/2 grid-cols-2 mx-auto">
 					<input
+						name="name"
 						type="text"
 						value={player}
 						onChange={(e) => handlePlayerNameChange(index, e.target.value)}
-						onKeyDown={(e) => handleKeyPress(e, index)}
-						ref={index === players.length - 1 ? lastInputRef : null}
+						className={`${theme} p-2 placeholder:opacity-60 placeholder:text-contrastText h-8 bg-light/20 my-1 rounded-md uppercase font-semibold text-contrastText bg-light focus:outline-main`}
+						placeholder={`Player ${index + 1}`}
 					/>
-					{players.length > minPlayers ? (
-						<button
-							onClick={() => removePlayer(index)}
-							className="text-red-500"
-						>
-							x
-						</button>
-					) : null}
+					{index !== players.length - 1 &&
+						effectivePlayers.length > minPlayers && (
+							<button
+								className={`${theme} relative flex items-center w-8 my-auto ml-4 rounded-md aspect-square hover:bg-light/20`}
+								onClick={(e) => removePlayer(index)(e)}
+							>
+								<svg
+									viewBox="0 0 24 24"
+									className={`m-auto w-7 aspect-square text-contrastText`}
+									fill="currentColor"
+								>
+									<path d="M0 0h24v24H0V0z" fill="none" />
+									<path d="M19 13H5v-2h14v2z" />
+								</svg>
+							</button>
+						)}
 				</div>
 			))}
-			{error && <p className="text-red-500">{error}</p>}
-			{prevStep && <button onClick={prevStep}>Indietro</button>}
-			<button onClick={addPlayer}>Crea nuovo giocatore</button>
-			{nextStep != null ? (
-				players.length >= minPlayers ? (
-					!players.some((name) => name.trim() === "" || !!error) ? (
-						<button onClick={nextStep}>Avanti</button>
-					) : null
-				) : null
-			) : null}
 		</div>
 	);
 };
 
-export default PlayerSetup;
+export default PlayersSetup;

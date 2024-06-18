@@ -1,7 +1,6 @@
-export interface PlayerSetupProps {
+export interface PlayersSetupProps {
 	players: string[];
 	setPlayers: (players: string[]) => void;
-	nextStep?: () => void;
-	prevStep?: () => void;
-	minPlayers?: number;
+	minPlayers: number;
+	theme: string;
 }
