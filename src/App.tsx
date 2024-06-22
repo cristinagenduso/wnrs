@@ -112,7 +112,7 @@ const App: FC = () => {
 
 	return (
 		<div
-			className={`h-screen relative ${
+			className={`h-[calc(100dvh)] max-h-screen relative ${
 				step === 3 ? `${theme} bg-main` : "bg-white"
 			}`}
 		>
