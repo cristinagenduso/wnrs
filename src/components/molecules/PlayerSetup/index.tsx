@@ -1,4 +1,5 @@
-import { FC, useEffect } from "react";
+import Button from "@atoms/Button";
+import { FC, useState } from "react";
 import { PlayersSetupProps } from "./index.types";
 
 const PlayersSetup: FC<PlayersSetupProps> = ({
@@ -7,37 +8,55 @@ const PlayersSetup: FC<PlayersSetupProps> = ({
 	minPlayers,
 	theme,
 }) => {
-	useEffect(() => {
-		if (players.length < minPlayers) {
-			setPlayers(Array(minPlayers).fill(""));
-		}
-	}, [minPlayers, players.length, setPlayers]);
+	const [localPlayers, setLocalPlayers] = useState([...players]);
 
-	const effectivePlayers = players.filter((player) => player.trim() !== "");
+	const addPlayer = () => {
+		setLocalPlayers([...localPlayers, ""]);
+	};
+
+	const effectivePlayers = localPlayers.filter(
+		(player) => player.trim() !== ""
+	);
+
+	const handleSaveChanges = () => {
+		const filteredPlayers = localPlayers.filter(
+			(player) => player.trim() !== ""
+		);
+		if (filteredPlayers.length < minPlayers) {
+			setPlayers([
+				...filteredPlayers,
+				...Array(minPlayers - filteredPlayers.length).fill(""),
+			]);
+		} else {
+			setPlayers(filteredPlayers);
+		}
+	};
 
 	const removePlayer = (index: number) => (e) => {
 		e.preventDefault();
-		if (effectivePlayers.length > minPlayers) {
-			const updatedPlayers = players.filter((_, i) => i !== index);
-			setPlayers(updatedPlayers);
+		if (localPlayers.length > minPlayers) {
+			const updatedPlayers = localPlayers.filter((_, i) => i !== index);
+			setLocalPlayers(updatedPlayers);
 		}
 	};
 
 	const handlePlayerNameChange = (index: number, name: string) => {
-		const updatedPlayers = [...players];
+		const updatedPlayers = [...localPlayers];
 		updatedPlayers[index] = name;
-		setPlayers(updatedPlayers);
+		setLocalPlayers(updatedPlayers);
 	};
 
-	useEffect(() => {
-		if (players.length === 0 || players[players.length - 1].trim() !== "") {
-			setPlayers([...players, ""]);
+	const arraysEqual = (a, b) => {
+		if (a.length !== b.length) return false;
+		for (let i = 0; i < a.length; i++) {
+			if (a[i] !== b[i]) return false;
 		}
-	}, [players, setPlayers]);
+		return true;
+	};
 
 	return (
 		<div className="py-10">
-			{players.map((player, index) => (
+			{localPlayers.map((player, index) => (
 				<div key={index} className="grid w-1/2 grid-cols-2 mx-auto">
 					<input
 						name="name"
@@ -47,7 +66,7 @@ const PlayersSetup: FC<PlayersSetupProps> = ({
 						className={`${theme} p-2 placeholder:opacity-60 placeholder:text-contrastText h-8 bg-light/20 my-1 rounded-md uppercase font-semibold text-contrastText bg-light focus:outline-main`}
 						placeholder={`Player ${index + 1}`}
 					/>
-					{index !== players.length - 1 &&
+					{index !== localPlayers.length - 1 &&
 						effectivePlayers.length > minPlayers && (
 							<button
 								className={`${theme} relative flex items-center w-8 my-auto ml-4 rounded-md aspect-square hover:bg-light/20`}
@@ -65,6 +84,16 @@ const PlayersSetup: FC<PlayersSetupProps> = ({
 						)}
 				</div>
 			))}
+			<div className="grid grid-cols-2 mx-6 mt-5 gap-x-4">
+				<Button onClick={addPlayer} theme={theme}>
+					add player
+				</Button>
+				{!arraysEqual(localPlayers, players) && (
+					<Button onClick={handleSaveChanges} theme={theme}>
+						save
+					</Button>
+				)}
+			</div>
 		</div>
 	);
 };
