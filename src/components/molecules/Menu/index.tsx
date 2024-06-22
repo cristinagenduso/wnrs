@@ -65,7 +65,7 @@ const Menu: FC<MenuProps> = ({
 			</MenuItem>
 			<MenuItem
 				handleClick={handleDecksClick}
-				isDeck
+				title="decks selection"
 				icon={
 					<Deck
 						className={`hover:text-contrastText hover:bg-black/10 size-8 rounded-md p-1 mx-auto ${theme}`}
