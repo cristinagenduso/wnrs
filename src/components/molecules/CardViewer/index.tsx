@@ -22,6 +22,14 @@ const CardViewer: FC<CardViewerProps> = ({
 	const [currentLevelIndex, setCurrentLevelIndex] = useState<number>(0);
 	const textRef = useRef<HTMLParagraphElement>(null);
 
+	const shuffleArray = (array: string[]) => {
+		for (let i = array.length - 1; i > 0; i--) {
+			const j = Math.floor(Math.random() * (i + 1));
+			[array[i], array[j]] = [array[j], array[i]];
+		}
+		return array;
+	};
+
 	const allLevels = useMemo(() => {
 		const levelsMap: { [key: string]: string[] } = {};
 
@@ -35,6 +43,10 @@ const CardViewer: FC<CardViewerProps> = ({
 					levelsMap[idx] = levelsMap[idx].concat(deck.questions[level]);
 				});
 			}
+		});
+
+		Object.keys(levelsMap).forEach((level) => {
+			levelsMap[level] = shuffleArray(levelsMap[level]);
 		});
 
 		return Object.values(levelsMap).filter((level) => level.length > 0);
