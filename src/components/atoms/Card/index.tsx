@@ -3,7 +3,7 @@ import { CardProps } from "./index.types";
 
 const Card: FC<CardProps> = ({ children, textRef }) => {
 	return (
-		<div className="laptop:w-[80%] rounded-[25px] text-center laptop:rounded-[60px] text-[#c10016] flex justify-center content-center uppercase m-auto laptop:aspect-video py-16 relative bg-paper">
+		<div className="laptop:w-[80%] rounded-[25px] text-center laptop:rounded-[60px] text-[#c10016] flex justify-center content-center uppercase m-auto laptop:aspect-video h-60 laptop:h-fit relative bg-paper">
 			<p
 				ref={textRef}
 				className="w-[65%] m-auto text-lg laptop:text-2xl font-bold laptop:w-[70%] top-1/2"
