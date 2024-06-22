@@ -41,7 +41,7 @@ const Card: FC<CardProps> = ({ children, textRef }) => {
 					</p>
 				</div>
 			) : (
-				<div className="laptop:w-[80%] rounded-[25px] text-center laptop:rounded-[60px] text-[#c10016] flex justify-center content-center uppercase m-auto laptop:aspect-video h-64 laptop:h-fit relative bg-paper drop-shadow-md shadow-dark">
+				<div className="laptop:w-[80%] rounded-[25px] text-center laptop:rounded-[60px] text-[#c10016] flex justify-center content-center uppercase m-auto laptop:aspect-video h-64 laptop:h-fit bg-paper drop-shadow-md shadow-dark">
 					<p
 						ref={textRef}
 						className="w-[80%] m-auto text-base laptop:text-2xl font-bold laptop:w-[70%] top-1/2"

@@ -17,7 +17,7 @@ const CardController: FC<CardControllerProps> = ({
 }) => {
 	return (
 		<div
-			className={`grid grid-cols-5 mx-3 laptop:mx-0 laptop:w-[80%] m-auto mt-6 text-contrastText ${theme} select-none`}
+			className={`grid grid-cols-5 mx-3 laptop:w-[80%] laptop:mx-auto mt-6 text-contrastText ${theme} select-none`}
 		>
 			<span className="flex align-middle justify-self-start">
 				<button

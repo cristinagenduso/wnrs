@@ -44,7 +44,7 @@ const Dialog: FC<DialogProps> = ({
 					</div>
 				</div>
 			) : (
-				<div className="fixed top-0 left-0 z-10 w-screen h-full bg-main tablet:bg-black/80">
+				<div className="absolute top-0 left-0 z-10 w-screen h-full bg-main tablet:bg-black/80">
 					<div
 						className={`${theme} bg-main absolute top-1/2 left-1/2 tablet:w-[50%] w-full transform -translate-x-1/2 -translate-y-1/2 text-contrastText h-fit items-center`}
 					>
