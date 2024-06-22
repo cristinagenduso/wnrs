@@ -1,7 +1,7 @@
 import React from "react";
 
 export interface CardProps {
-	children: React.ReactNode;
+	children: string;
 	textRef: React.Ref<HTMLParagraphElement>;
 	theme: string;
 }
