@@ -44,7 +44,7 @@ const DeckSelection: FC<DeckSelectionProps> = ({
 	);
 
 	return (
-		<div className="h-[80vh] sm:py-8 mx-auto overflow-y-scroll sm:deck-list-selection">
+		<div className="h-[80vh] tablet:py-8 mx-auto overflow-y-scroll tablet:deck-list-selection">
 			<div className="w-[90%] p-2 float-right">
 				{Object.values(categories).map((category) => (
 					<div key={category.displayName} className="mb-2">
