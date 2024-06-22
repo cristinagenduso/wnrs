@@ -3,7 +3,7 @@ import Card from "@atoms/Card";
 import Header from "@atoms/Header";
 import CardController from "@molecules/CardController";
 import Menu from "@molecules/Menu";
-import { FC, useMemo, useRef, useState } from "react";
+import { FC, useCallback, useMemo, useRef, useState } from "react";
 import { CardViewerProps } from "./index.types";
 
 const CardViewer: FC<CardViewerProps> = ({
@@ -22,12 +22,16 @@ const CardViewer: FC<CardViewerProps> = ({
 	const [currentLevelIndex, setCurrentLevelIndex] = useState<number>(0);
 	const textRef = useRef<HTMLParagraphElement>(null);
 
-	const shuffleArray = (array: string[]) => {
-		for (let i = array.length - 1; i > 0; i--) {
+	const shuffleArray = (array) => {
+		const shuffledArray = [...array];
+		for (let i = shuffledArray.length - 1; i > 0; i--) {
 			const j = Math.floor(Math.random() * (i + 1));
-			[array[i], array[j]] = [array[j], array[i]];
+			[shuffledArray[i], shuffledArray[j]] = [
+				shuffledArray[j],
+				shuffledArray[i],
+			];
 		}
-		return array;
+		return shuffledArray;
 	};
 
 	const allLevels = useMemo(() => {
@@ -63,7 +67,7 @@ const CardViewer: FC<CardViewerProps> = ({
 		}
 	};
 
-	const prevCard = () => {
+	const prevCard = useCallback(() => {
 		if (currentCardIndex > 0) {
 			setCurrentCardIndex((prev) => prev - 1);
 			setCurrentPlayerIndex(
@@ -72,21 +76,21 @@ const CardViewer: FC<CardViewerProps> = ({
 		} else if (currentLevelIndex > 0) {
 			prevLevel();
 		}
-	};
+	}, []);
 
-	const nextLevel = () => {
+	const nextLevel = useCallback(() => {
 		if (currentLevelIndex < allLevels.length - 1) {
 			setCurrentLevelIndex((prev) => prev + 1);
 			setCurrentCardIndex(0);
-			setCurrentPlayerIndex(0);
+			setCurrentPlayerIndex((prev) => (prev + 1) % players.length);
 		}
-	};
+	}, []);
 
 	const prevLevel = () => {
 		if (currentLevelIndex > 0) {
 			setCurrentLevelIndex((prev) => prev - 1);
-			setCurrentCardIndex(0);
-			setCurrentPlayerIndex(0);
+			setCurrentCardIndex(allLevels[currentLevelIndex - 1].length - 1);
+			setCurrentPlayerIndex((prev) => (prev + 1) % players.length);
 		}
 	};
 
