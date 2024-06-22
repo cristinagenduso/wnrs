@@ -125,17 +125,17 @@ const App: FC = () => {
 						<br />
 						Strangers
 					</h1>
-					<div className="flex flex-row w-fit group">
+					<div className="flex flex-row mt-3 w-fit group">
 						<button
 							onClick={nextStep}
-							className="font-bold uppercase group-hover:text-main"
+							className="font-bold uppercase text-main"
 						>
 							New Game
 						</button>
 						<svg
 							viewBox="0 0 24 24"
 							fill="currentColor"
-							className={`group-hover:text-main ml-1 size-6 my-auto aspect-square ${theme} text-transparent`}
+							className={`group-hover:text-main ml-[2px] size-6 my-auto aspect-square ${theme} md:text-transparent text-main transform group-hover:translate-x-2 duration-300 ease-in-out`}
 						>
 							<path d="M0 0h24v24H0V0z" fill="none" />
 							<path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6-6-6z" />
