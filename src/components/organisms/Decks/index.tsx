@@ -53,7 +53,7 @@ const Decks: FC<DecksProps> = ({
 	);
 
 	return (
-		<div className="absolute mx-auto -translate-y-1/2 top-1/2 laptop:pt-20">
+		<div className="absolute -translate-x-1/2 -translate-y-1/2 left-1/2 top-1/2 laptop:pt-20 w-[90%]">
 			<h2
 				className={`w-[90%] laptop:w-1/2 py-2 pl-4 m-auto font-semibold uppercase text-contrastText bg-main text-xl ${theme}`}
 			>
