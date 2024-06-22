@@ -2,9 +2,27 @@ import themeSwapper from "tailwindcss-theme-swapper";
 
 export default {
 	content: ["./src/**/*.{js,jsx,ts,tsx}"],
+	theme: {
+		screens: {
+			phone: "320px",
+			// => @media (min-width: 320px) { ... }
+
+			tablet: "696px",
+			// => @media (min-width: 696px) { ... }
+
+			laptop: "1080px",
+			// => @media (min-width: 1080px) { ... }
+
+			notebook: "1366px",
+			// => @media (min-width: 1366px) { ... }
+
+			desktop: "1920px",
+			// => @media (min-width: 1920px) { ... }
+		},
+	},
 	variants: {
 		extend: {
-			display: ["disabled"], // Ensure disabled variant is available
+			display: ["disabled"],
 		},
 	},
 	plugins: [

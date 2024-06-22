@@ -49,7 +49,7 @@ const Menu: FC<MenuProps> = ({
 	};
 
 	return (
-		<div className="grid grid-cols-5 w-[60%] md:w-[30%] m-auto text-contrastText/80 mt-6 relative">
+		<div className="grid grid-cols-5 w-[60%] laptop:w-[30%] m-auto text-contrastText/80 mt-6 relative">
 			<MenuItem
 				handleClick={handleInfoClick}
 				title="How To Play"

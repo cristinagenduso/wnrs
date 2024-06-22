@@ -53,16 +53,16 @@ const Decks: FC<DecksProps> = ({
 	);
 
 	return (
-		<div className="pt-5 mx-auto md:pt-20">
+		<div className="pt-5 mx-auto laptop:pt-20">
 			<h2
-				className={`w-[90%] md:w-1/2 py-2 pl-4 m-auto font-semibold uppercase text-contrastText bg-main text-xl ${theme}`}
+				className={`w-[90%] laptop:w-1/2 py-2 pl-4 m-auto font-semibold uppercase text-contrastText bg-main text-xl ${theme}`}
 			>
 				decks
 			</h2>
-			<p className="w-[90%] md:w-1/2 m-auto mt-2 mb-10">
+			<p className="w-[90%] laptop:w-1/2 m-auto mt-2 mb-10">
 				Don't worry. You may change this later :)
 			</p>
-			<div className="w-[90%] md:w-1/2 p-2 m-auto overflow-y-scroll deck-list h-96">
+			<div className="w-[90%] laptop:w-1/2 p-2 m-auto overflow-y-scroll deck-list h-96">
 				{Object.values(categories).map((category) => (
 					<div key={category.displayName} className="mb-2">
 						<h2
@@ -172,7 +172,7 @@ const Decks: FC<DecksProps> = ({
 					</div>
 				))}
 			</div>
-			<div className="w-[90%] md:w-[60%] grid grid-cols-2 mx-auto md:mt-20 mt-7">
+			<div className="w-[90%] laptop:w-[60%] grid grid-cols-2 mx-auto laptop:mt-20 mt-7">
 				<div className="place-items-start">
 					<Button onClick={prevStep} theme={theme}>
 						back

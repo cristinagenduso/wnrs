@@ -55,17 +55,20 @@ const Players: FC<PlayersProps> = ({
 	}, [players]);
 
 	return (
-		<div className="mt-5 md:mt-20">
+		<div className="mt-5 laptop:mt-20">
 			<h2
-				className={`${theme} w-[90%] md:w-1/2 py-2 pl-4 mx-auto font-semibold uppercase text-contrastText bg-main`}
+				className={`${theme} w-[90%] laptop:w-1/2 py-2 pl-4 mx-auto font-semibold uppercase text-contrastText bg-main`}
 			>
 				players
 			</h2>
-			<p className="w-[90%] md:w-1/2 mx-auto mt-2 mb-10">
+			<p className="w-[90%] laptop:w-1/2 mx-auto mt-2 mb-10">
 				Just a bit more info. You may change also this later :)
 			</p>
 			{players.map((player, index) => (
-				<div key={index} className="grid w-[90%] md:w-1/2 grid-cols-2 mx-auto">
+				<div
+					key={index}
+					className="grid w-[90%] laptop:w-1/2 grid-cols-2 mx-auto"
+				>
 					<input
 						name="name"
 						type="text"
@@ -92,7 +95,7 @@ const Players: FC<PlayersProps> = ({
 						)}
 				</div>
 			))}
-			<div className="md:w-[60%] w-[90%] grid grid-cols-2 mx-auto mt-20">
+			<div className="laptop:w-[60%] w-[90%] grid grid-cols-2 mx-auto mt-20">
 				{prevStep && (
 					<div className="place-items-start">
 						<Button onClick={prevStep} theme={theme}>
