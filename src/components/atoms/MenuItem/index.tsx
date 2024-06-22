@@ -13,7 +13,7 @@ const MenuItem: FC<MenuItemProps> = ({
 }) => {
 	return (
 		<>
-			<button onClick={handleClick} className="cursor-pointer w-fit">
+			<button onClick={handleClick} className="mx-auto cursor-pointer w-fit">
 				{icon}
 			</button>
 			{show && (
