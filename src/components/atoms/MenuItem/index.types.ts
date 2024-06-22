@@ -6,6 +6,5 @@ export interface MenuItemProps {
 	show?: boolean;
 	title?: string;
 	icon: React.ReactNode;
-	isDeck?: boolean;
 	theme: string;
 }

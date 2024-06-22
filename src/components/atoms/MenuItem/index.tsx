@@ -8,7 +8,6 @@ const MenuItem: FC<MenuItemProps> = ({
 	show,
 	title,
 	icon,
-	isDeck,
 	theme,
 }) => {
 	return (
@@ -17,12 +16,7 @@ const MenuItem: FC<MenuItemProps> = ({
 				{icon}
 			</button>
 			{show && (
-				<Dialog
-					handleClose={handleClick}
-					title={title}
-					isDeck={isDeck}
-					theme={theme}
-				>
+				<Dialog handleClose={handleClick} title={title} theme={theme}>
 					{children}
 				</Dialog>
 			)}
