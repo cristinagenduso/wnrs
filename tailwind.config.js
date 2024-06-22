@@ -176,7 +176,7 @@ export default {
 							main: "#4098bc",
 							dark: "#006a8c",
 							light: "#77c9ef",
-							contrastText: "#201e1f",
+							contrastText: "#ffffff",
 							paper: "#f6f6f6",
 							contrastPaperText: "#201e1f",
 						},
