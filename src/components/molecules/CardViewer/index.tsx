@@ -97,7 +97,7 @@ const CardViewer: FC<CardViewerProps> = ({
 	return (
 		<div className="flex items-center justify-center h-full">
 			<ButtonBack prevStep={prevStep} theme={theme} />
-			<div className="m-auto tablet:w-[80%] w-full">
+			<div className="m-auto tablet:max-w-[80%] laptop:max-w-[75%] w-full">
 				<Header player={players[currentPlayerIndex]} theme={theme} />
 				<Card textRef={textRef} theme={theme}>
 					{currentLevelCards[currentCardIndex]}

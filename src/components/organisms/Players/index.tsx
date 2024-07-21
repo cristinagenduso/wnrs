@@ -14,7 +14,6 @@ const Players: FC<PlayersProps> = ({
 		if (players.length < minPlayers) {
 			setPlayers(Array(minPlayers).fill(""));
 		}
-		console.log("min players: ", minPlayers);
 	}, [minPlayers, players.length, setPlayers]);
 
 	const effectivePlayers = players.filter((player) => player.trim() !== "");
@@ -52,10 +51,10 @@ const Players: FC<PlayersProps> = ({
 
 	useEffect(() => {
 		if (players[players.length - 1]) setPlayers([...players, ""]);
-	}, [players]);
+	}, [players, setPlayers]);
 
 	return (
-		<div className="mt-5 laptop:mt-20">
+		<div className="pt-5 laptop:pt-20">
 			<h2
 				className={`${theme} w-[90%] laptop:w-1/2 py-2 pl-4 mx-auto font-semibold uppercase text-contrastText bg-main`}
 			>
@@ -98,7 +97,7 @@ const Players: FC<PlayersProps> = ({
 			<div className="laptop:w-[60%] w-[90%] grid grid-cols-2 mx-auto mt-20">
 				{prevStep && (
 					<div className="place-items-start">
-						<Button onClick={prevStep} theme={theme}>
+						<Button onClick={prevStep} theme={theme} arrowLeft>
 							back
 						</Button>
 					</div>

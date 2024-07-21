@@ -178,7 +178,7 @@ const Decks: FC<DecksProps> = ({
 				</div>
 				<div className="w-[90%] laptop:w-[60%] grid grid-cols-2 mx-auto laptop:mt-20 mt-7">
 					<div className="place-items-start">
-						<Button onClick={prevStep} theme={theme}>
+						<Button onClick={prevStep} theme={theme} arrowLeft>
 							back
 						</Button>
 					</div>
