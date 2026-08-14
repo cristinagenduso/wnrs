@@ -3,7 +3,13 @@
 @tailwind utilities;
 
 body {
-	font-family: "Helvetica";
+	font-family: "Inter", "Helvetica", system-ui, sans-serif;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+h1, h2 {
+	font-family: "Inter", "Helvetica", system-ui, sans-serif;
 }
 
 .container {
@@ -27,4 +33,71 @@ body {
 .container::-webkit-scrollbar-track {
 	background-color: #c1001725;
 	border-radius: 6px;
+}
+
+/* ===================== */
+/* Card Flip Animation   */
+/* ===================== */
+@keyframes cardFlip {
+	0% {
+		transform: perspective(800px) rotateY(0deg) scale(1);
+		opacity: 1;
+	}
+	40% {
+		transform: perspective(800px) rotateY(90deg) scale(0.95);
+		opacity: 0;
+	}
+	60% {
+		transform: perspective(800px) rotateY(-90deg) scale(0.95);
+		opacity: 0;
+	}
+	100% {
+		transform: perspective(800px) rotateY(0deg) scale(1);
+		opacity: 1;
+	}
+}
+
+.card-flip {
+	animation: cardFlip 0.4s ease-in-out;
+}
+
+/* ===================== */
+/* Fade-in Animation     */
+/* ===================== */
+@keyframes fadeIn {
+	from {
+		opacity: 0;
+		transform: translateY(8px);
+	}
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}
+
+.animate-fadeIn {
+	animation: fadeIn 0.4s ease-out forwards;
+}
+
+.animation-delay-200 {
+	animation-delay: 200ms;
+	opacity: 0;
+}
+
+/* ===================== */
+/* Smooth transitions    */
+/* ===================== */
+* {
+	-webkit-tap-highlight-color: transparent;
+}
+
+button {
+	touch-action: manipulation;
+}
+
+/* Ensure minimum touch target size for mobile */
+@media (max-width: 696px) {
+	button, input {
+		min-height: 44px;
+	}
 }

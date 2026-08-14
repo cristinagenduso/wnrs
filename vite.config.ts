@@ -12,6 +12,7 @@ export default defineConfig({
 			"@molecules": `${path.resolve(__dirname, "./src/components/molecules")}`,
 			"@organisms": `${path.resolve(__dirname, "./src/components/organisms")}`,
 			"@svg": path.resolve(__dirname, "./src/assets/svg"),
+			"@hooks": path.resolve(__dirname, "./src/hooks"),
 		},
 	},
 	plugins: [react(), svgrPlugin()],

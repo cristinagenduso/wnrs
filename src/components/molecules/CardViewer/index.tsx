@@ -3,7 +3,8 @@ import Card from "@atoms/Card";
 import Header from "@atoms/Header";
 import CardController from "@molecules/CardController";
 import Menu from "@molecules/Menu";
-import { FC, useCallback, useMemo, useRef, useState } from "react";
+import { FC, useEffect, useRef } from "react";
+import { useGameState } from "../../../hooks/useGameState";
 import { CardViewerProps } from "./index.types";
 
 const CardViewer: FC<CardViewerProps> = ({
@@ -16,81 +17,113 @@ const CardViewer: FC<CardViewerProps> = ({
 	theme,
 	toggleTheme,
 	categories,
+	isOnline = false,
+	roomState,
+	isHost,
+	updateGameState,
+	seed,
 }) => {
-	const [currentCardIndex, setCurrentCardIndex] = useState<number>(0);
-	const [currentPlayerIndex, setCurrentPlayerIndex] = useState<number>(0);
-	const [currentLevelIndex, setCurrentLevelIndex] = useState<number>(0);
 	const textRef = useRef<HTMLParagraphElement>(null);
 
-	const shuffleArray = (array) => {
-		const shuffledArray = [...array];
-		for (let i = shuffledArray.length - 1; i > 0; i--) {
-			const j = Math.floor(Math.random() * (i + 1));
-			[shuffledArray[i], shuffledArray[j]] = [
-				shuffledArray[j],
-				shuffledArray[i],
-			];
+	const {
+		allLevels,
+		currentLevelCards,
+		currentCardIndex,
+		currentLevelIndex,
+		currentPlayerIndex,
+		currentCardText,
+		isFlipping,
+		nextCard,
+		prevCard,
+		nextLevel,
+		prevLevel,
+		setIndices,
+		canGoNext,
+		canGoPrev,
+		canGoNextLevel,
+		canGoPrevLevel,
+	} = useGameState({
+		decks,
+		selectedDecks,
+		players,
+		seed,
+		isOnline,
+	});
+
+	// Online: determine if it's this player's turn
+	const isMyTurn = !isOnline || (isOnline && (
+		(isHost && currentPlayerIndex === 0) ||
+		(!isHost && currentPlayerIndex === 1)
+	));
+
+	// Online: sync state from Firebase when remote player advances
+	useEffect(() => {
+		if (!isOnline || !roomState) return;
+
+		const remoteCard = roomState.currentCardIndex;
+		const remoteLevel = roomState.currentLevelIndex;
+		const remotePlayer = roomState.currentPlayerIndex;
+
+		if (
+			remoteCard !== currentCardIndex ||
+			remoteLevel !== currentLevelIndex ||
+			remotePlayer !== currentPlayerIndex
+		) {
+			setIndices(remoteCard, remoteLevel, remotePlayer);
 		}
-		return shuffledArray;
+	}, [
+		isOnline,
+		roomState?.currentCardIndex,
+		roomState?.currentLevelIndex,
+		roomState?.currentPlayerIndex,
+	]);
+
+	// Wrap navigation to sync online
+	const handleNextCard = () => {
+		if (isOnline && !isMyTurn) return;
+		const result = nextCard();
+		if (result && isOnline && updateGameState) {
+			updateGameState({
+				currentCardIndex: result.cardIndex,
+				currentLevelIndex: result.levelIndex,
+				currentPlayerIndex: result.playerIndex,
+			});
+		}
 	};
 
-	const allLevels = useMemo(() => {
-		const levelsMap: { [key: string]: string[] } = {};
-
-		selectedDecks.forEach((deckId) => {
-			const deck = decks.find((m) => m.short_name === deckId);
-			if (deck) {
-				Object.keys(deck.questions).forEach((level, idx) => {
-					if (!levelsMap[idx]) {
-						levelsMap[idx] = [];
-					}
-					levelsMap[idx] = levelsMap[idx].concat(deck.questions[level]);
-				});
-			}
-		});
-
-		Object.keys(levelsMap).forEach((level) => {
-			levelsMap[level] = shuffleArray(levelsMap[level]);
-		});
-
-		return Object.values(levelsMap).filter((level) => level.length > 0);
-	}, [selectedDecks, decks]);
-
-	const currentLevelCards = allLevels[currentLevelIndex] || [];
-
-	const nextCard = () => {
-		if (currentCardIndex < currentLevelCards.length - 1) {
-			setCurrentCardIndex((prev) => prev + 1);
-			setCurrentPlayerIndex((prev) => (prev + 1) % players.length);
-		} else if (currentLevelIndex < allLevels.length - 1) {
-			nextLevel();
+	const handlePrevCard = () => {
+		if (isOnline && !isMyTurn) return;
+		const result = prevCard();
+		if (result && isOnline && updateGameState) {
+			updateGameState({
+				currentCardIndex: result.cardIndex,
+				currentLevelIndex: result.levelIndex,
+				currentPlayerIndex: result.playerIndex,
+			});
 		}
 	};
 
-	const prevCard = useCallback(() => {
-		if (currentCardIndex > 0) {
-			setCurrentCardIndex((prev) => prev - 1);
-			setCurrentPlayerIndex(
-				(prev) => (prev - 1 + players.length) % players.length
-			);
-		} else if (currentLevelIndex > 0) {
-			prevLevel();
+	const handleNextLevel = () => {
+		if (isOnline && !isMyTurn) return;
+		const result = nextLevel();
+		if (result && isOnline && updateGameState) {
+			updateGameState({
+				currentCardIndex: result.cardIndex,
+				currentLevelIndex: result.levelIndex,
+				currentPlayerIndex: result.playerIndex,
+			});
 		}
-	}, []);
+	};
 
-	const nextLevel = useCallback(() => {
-		if (currentLevelIndex < allLevels.length - 1) {
-			setCurrentLevelIndex((prev) => prev + 1);
-			setCurrentCardIndex(0);
-			setCurrentPlayerIndex((prev) => (prev + 1) % players.length);
-		}
-	}, []);
-
-	const prevLevel = () => {
-		if (currentLevelIndex > 0) {
-			setCurrentLevelIndex((prev) => prev - 1);
-			setCurrentCardIndex(allLevels[currentLevelIndex - 1].length - 1);
-			setCurrentPlayerIndex((prev) => (prev + 1) % players.length);
+	const handlePrevLevel = () => {
+		if (isOnline && !isMyTurn) return;
+		const result = prevLevel();
+		if (result && isOnline && updateGameState) {
+			updateGameState({
+				currentCardIndex: result.cardIndex,
+				currentLevelIndex: result.levelIndex,
+				currentPlayerIndex: result.playerIndex,
+			});
 		}
 	};
 
@@ -98,26 +131,39 @@ const CardViewer: FC<CardViewerProps> = ({
 		<div className="flex items-center justify-center h-full">
 			<ButtonBack prevStep={prevStep} theme={theme} />
 			<div className="m-auto tablet:max-w-[80%] laptop:max-w-[75%] w-full">
-				<Header player={players[currentPlayerIndex]} theme={theme} />
-				<Card textRef={textRef} theme={theme}>
-					{currentLevelCards[currentCardIndex]}
+				<Header
+					player={players[currentPlayerIndex]}
+					theme={theme}
+					isMyTurn={isOnline ? isMyTurn : undefined}
+				/>
+				<Card
+					textRef={textRef}
+					theme={theme}
+					isFlipping={isFlipping}
+				>
+					{currentCardText}
 				</Card>
+				{isOnline && !isMyTurn && (
+					<p className={`${theme} text-center text-contrastText/60 text-xs mt-2 uppercase font-semibold animate-pulse`}>
+						Waiting for {players[currentPlayerIndex]} to draw...
+					</p>
+				)}
 				<CardController
 					theme={theme}
-					previousCard={prevCard}
-					nextCard={nextCard}
-					previousLevel={prevLevel}
-					nextLevel={nextLevel}
+					previousCard={handlePrevCard}
+					nextCard={handleNextCard}
+					previousLevel={handlePrevLevel}
+					nextLevel={handleNextLevel}
 					level={currentLevelIndex + 1}
 					curr={currentCardIndex + 1}
 					tot={currentLevelCards.length}
-					disablePrev={currentCardIndex === 0}
-					disablePrevLevel={currentLevelIndex === 0}
-					disableNext={currentCardIndex === currentLevelCards.length - 1}
-					disableNextLevel={currentLevelIndex === allLevels.length - 1}
+					disablePrev={!canGoPrev || (isOnline && !isMyTurn)}
+					disablePrevLevel={!canGoPrevLevel || (isOnline && !isMyTurn)}
+					disableNext={(!canGoNext && currentLevelIndex >= allLevels.length - 1) || (isOnline && !isMyTurn)}
+					disableNextLevel={!canGoNextLevel || (isOnline && !isMyTurn)}
 				/>
 				<Menu
-					textRef={currentLevelCards[currentCardIndex]}
+					textRef={currentCardText}
 					decks={decks}
 					players={players}
 					setSelectedDecks={setSelectedDecks}

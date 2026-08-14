@@ -1,0 +1,85 @@
+{
+    "name": "Icebreaker",
+    "short_name": "Icebreaker",
+    "players": "2",
+    "theme": "icebreaker",
+    "levels": [
+        "Level 1 Perception",
+        "Level 2 Connection",
+        "Level 3 Reflection",
+        "Final Card"
+    ],
+    "isExpansion": false,
+    "backDesc": [
+        "Drop the small talk.",
+        "Get to know someone for real."
+    ],
+    "preview": [
+        "Tired of surface-level conversations?",
+        "Icebreaker is designed for people who just met — whether through a dating app, at a party, or anywhere in between. 3 levels take you from playful first impressions to real, meaningful conversation.",
+        "No awkward silences. Just honest questions.",
+        "Ready?"
+    ],
+    "questions": [[
+        "If your life had a theme song\n right now, what would it be?",
+        "What's the most useless\n talent you have?\n Show me.",
+        "What's the last thing that\n made you laugh until\n you cried?",
+        "What would your best friend\n say is your most annoying\n habit?",
+        "If you could only eat one\n cuisine for the rest of\n your life, what would it be?",
+        "What's your go-to\n comfort show when you've\n had a rough day?",
+        "What's the worst pickup line\n you've ever received?",
+        "If you had to describe\n yourself in three emojis,\n which ones would you pick?",
+        "What's a hobby you've\n always wanted to try\n but never have?",
+        "What's the most spontaneous\n thing you've ever done?",
+        "Do you believe in\n astrology? What's your\n sign? Do you think it\n fits you?",
+        "What's the last song you\n listened to on repeat?\n Why?",
+        "If you could live in any\n city in the world for a year,\n where would you go?",
+        "What's one thing on your\n bucket list you're determined\n to check off soon?",
+        "What's the most random\n fact you know?",
+        "Wild Card Think of your favorite\n ice cream flavor. On the count\n of three, say it out loud.\n (Both players)",
+        "Wild Card Share the last meme\n you saved on your phone.\n Explain why it's funny.",
+        "Wild Card Rate your cooking skills\n on a scale of 1-10. On the\n count of three, say your\n answers out loud! (Both players)"
+    ], [
+        "What's something about you\n that surprises people\n when they find out?",
+        "What's the best piece of\n advice you've ever\n received? Did you follow it?",
+        "What's a belief you held\n strongly 5 years ago that\n you've completely changed\n your mind about?",
+        "What does your ideal\n weekend look like?",
+        "What's the hardest thing\n you've ever had to\n unlearn?",
+        "What are you overthinking\n right now?",
+        "When was the last time\n you stepped outside your\n comfort zone? What happened?",
+        "What makes you feel most\n like yourself?",
+        "What's something you\n wish more people\n asked you about?",
+        "What does 'home' mean\n to you?",
+        "How do you recharge\n when life gets overwhelming?",
+        "What's a fear you've\n overcome that you're\n proud of?",
+        "What's one thing you're\n working on improving\n about yourself?",
+        "If you could have dinner\n with anyone, living or dead,\n who would it be and what\n would you ask them?",
+        "What's something you've\n never told anyone\n you just met?",
+        "What's a relationship\n lesson that took you way\n too long to learn?",
+        "What are you most\n passionate about right now?\n Why?",
+        "What's the kindest thing\n a stranger has ever\n done for you?",
+        "How do you know when\n you truly trust someone?",
+        "What's something small\n that tells you a lot about\n a person?",
+        "Wild Card Send each other a song\n that describes your\n current mood right now.\n Listen together.",
+        "Wild Card Share the last photo\n you took on your phone.\n Explain the context.",
+        "Wild Card Write down 3 words that\n describe how you're feeling\n right now. Compare.\n (Both players)",
+        "Wild Card Think of your biggest\n pet peeve. On the count\n of three, say it out loud!\n (Both players)",
+        "Wild Card Write down what you\n think the other person's\n love language is.\n Compare. (Both players)"
+    ], [
+        "What surprised you\n the most about this\n conversation?",
+        "What's one thing you'll\n remember about me\n after tonight?",
+        "Based on what you've\n learned, what do you think\n I'm looking for\n right now?",
+        "What question do you wish\n I had asked you?",
+        "How would you describe\n me to your best friend\n tomorrow?",
+        "What do you think we\n have in common that\n we haven't discovered yet?",
+        "What's the most attractive\n thing about me that isn't\n physical?",
+        "What do you think my\n superpower is?",
+        "In one word, how would\n you describe our\n conversation?",
+        "What's something you want\n me to know about you\n that hasn't come up yet?",
+        "Wild Card Swap a song\n recommendation.\n (Both players)",
+        "Wild Card Write a one-sentence\n first impression of each\n other. Exchange and\n read out loud.\n (Both players)",
+        "Wild Card Ask literally anything.\n Permission to go there."
+    ], [
+        "If this isn't the last\n time we talk, what\n should we do next time\n we meet?"
+    ]]
+}

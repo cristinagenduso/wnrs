@@ -196,6 +196,20 @@ export default {
 						},
 					},
 				},
+				{
+					name: "icebreaker",
+					selectors: [".icebreaker", '[data-theme="icebreaker"]'],
+					theme: {
+						colors: {
+							main: "#6C5CE7",
+							dark: "#4834d4",
+							light: "#a29bfe",
+							contrastText: "#ffffff",
+							paper: "#f8f7ff",
+							contrastPaperText: "#4834d4",
+						},
+					},
+				},
 			],
 		}),
 	],

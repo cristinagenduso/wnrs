@@ -10,6 +10,19 @@ interface Deck {
 	questions: string[][];
 }
 
+interface RoomState {
+	code: string;
+	hostName: string;
+	guestName: string;
+	selectedDecks: string[];
+	seed: number;
+	currentCardIndex: number;
+	currentLevelIndex: number;
+	currentPlayerIndex: number;
+	started: boolean;
+	createdAt: number;
+}
+
 export interface CardViewerProps {
 	selectedDecks: string[];
 	setSelectedDecks: (value) => void;
@@ -20,6 +33,12 @@ export interface CardViewerProps {
 	theme: string;
 	toggleTheme: (theme: string) => void;
 	categories: Categories;
+	// Online props
+	isOnline?: boolean;
+	roomState?: RoomState | null;
+	isHost?: boolean;
+	updateGameState?: (updates: Partial<RoomState>) => Promise<void>;
+	seed?: number;
 }
 
 type Categories = {
